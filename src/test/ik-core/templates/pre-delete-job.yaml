@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-pre-delete"
+  annotations:
+    "helm.sh/hook": pre-delete
+    "helm.sh/hook-weight": "-5"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: {{ include "ik-core.serviceAccountName" . }}
+      containers:
+        - name: pre-delete-job
+          image: "imaginekube/kubectl:v1.27.4"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              kubectl -n imaginekube-system scale deploy ik-installer-manager --replicas=0
+              until [ "$(kubectl -n kube-system get deploy ik-installer-manager -o jsonpath='{.status.readyReplicas}')" = "" ];
+              do
+                echo "ik-installer-manager is running......"
+                sleep 1s
+              done
+              kubectl patch workspaces.tenant.imaginekube.com system-workspace -p '{"metadata":{"finalizers":[]}}' --type=merge
+              kubectl patch workspacetemplates.tenant.imaginekube.com system-workspace -p '{"metadata":{"finalizers":[]}}' --type=merge
+              for ns in $(kubectl get ns -o jsonpath='{.items[*].metadata.name}')
+              do 
+                  kubectl label ns $ns imaginekube.com/workspace- && \
+                  kubectl patch ns $ns -p '{"metadata":{"ownerReferences":[]}}' --type=merge && \
+                  echo "{\"kind\":\"Namespace\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"$ns\",\"finalizers\":null}}" | kubectl replace --raw "/api/v1/namespaces/$ns/finalize" -f - 
+              done
+  
+  

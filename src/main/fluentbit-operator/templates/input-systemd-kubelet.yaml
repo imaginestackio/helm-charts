@@ -1,0 +1,17 @@
+{{- if .Values.Kubernetes -}}
+apiVersion: logging.imaginekube.com/v1alpha2
+kind: Input
+metadata:
+  name: kubelet
+  labels:
+    logging.imaginekube.com/enabled: "true"
+    logging.imaginekube.com/component: logging
+spec:
+  systemd:
+    tag: service.kubelet
+    path: /var/log/journal
+    db: /fluent-bit/tail/kubelet.db
+    dbSync: Normal
+    systemdFilter:
+      - _SYSTEMD_UNIT=kubelet.service
+  {{- end }}

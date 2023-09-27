@@ -1,0 +1,12 @@
+apiVersion: iam.imaginekube.com/v1beta1
+kind: User
+metadata:
+  name: admin
+  annotations:
+    iam.imaginekube.com/uninitialized: "true"
+    iam.imaginekube.com/globalrole: "platform-admin"
+spec:
+  email: admin@imaginekube.com
+  password: {{ include "getOrDefaultPass" . | quote }}
+status:
+  state: Active

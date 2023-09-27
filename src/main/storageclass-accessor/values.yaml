@@ -1,0 +1,5 @@
+image:
+  repository: imaginekube/storageclass-accessor
+
+webhook:
+  timeoutSeconds: 5

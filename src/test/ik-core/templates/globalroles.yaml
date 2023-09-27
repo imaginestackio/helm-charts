@@ -1,0 +1,195 @@
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  name: anonymous
+rules:
+  - nonResourceURLs:
+      - /dist/*
+    verbs:
+      - GET
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  annotations:
+    iam.imaginekube.com/rego-override: |-
+      package authz
+      default allow = false
+      allow = true {
+        input.Resource == "users"
+        input.User.Name == input.Name
+      }
+      allow = true {
+        allowedResources := ["clustermembers","workspacemembers","namespacemembers"]
+        allowedResources[_] == input.Resource
+        input.User.Name == input.Name
+        allowedVerbs := ["get","list","watch"]
+        allowedVerbs[_] == input.Verb
+      }
+      allow = true {
+        allowedNoneResources := ["/api","/api/v1"]
+        allowedNoneResources[_] == input.Path
+        input.Verb == "GET"
+      }
+      allow = true {
+        input.APIGroup == "tenant.imaginekube.com"
+        input.KubernetesRequest == false
+        allowedVerbs := ["get","list","watch"]
+        allowedVerbs[_] == input.Verb
+      }
+  name: authenticated
+rules:
+  - apiGroups:
+      - config.imaginekube.com
+    resources:
+      - configs
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - iam.imaginekube.com
+    resources:
+      - users
+      - roletemplates
+      - categories
+    verbs:
+      - list
+  - apiGroups:
+      - resources.imaginekube.com
+    resources:
+      - registry
+      - git
+    verbs:
+      - get
+      - create
+  - apiGroups:
+      - resources.imaginekube.com
+    resources:
+      - clusters
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - '*'
+    resources:
+      - storageclasses
+      - storageclasscapabilities
+      - nodes
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - resources.imaginekube.com
+    resources:
+      - namespaces
+      - services
+    verbs:
+      - list
+  - apiGroups:
+      - tenant.imaginekube.com
+    resources:
+      - workspacetemplates
+    verbs:
+      - patch
+  - apiGroups:
+      - extensions.imaginekube.com
+    resources:
+      - jsbundles
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - imaginekube.com
+    resources:
+      - extensions
+    verbs:
+      - get
+      - list
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  annotations:
+    imaginekube.com/creator: admin
+    imaginekube.com/description: '{"zh": "管理 ImagineKube 平台上的所有资源。", "en": "Manage all resources on the ImagineKube platform."}'
+  labels:
+    iam.imaginekube.com/auto-aggregate: "true"
+  name: platform-admin
+aggregationRoleTemplates:
+  roleSelector:
+    matchLabels:
+      iam.imaginekube.com/scope: "global"
+  templateNames:
+    - global-manage-clusters
+    - global-view-clusters
+    - global-create-workspaces
+    - global-view-basic
+    - global-manage-app-templates
+    - global-manage-users
+    - global-view-roles
+    - global-manage-platform-settings
+    - global-manage-workspaces
+    - global-view-app-templates
+    - global-view-users
+    - global-manage-roles
+    - global-view-workspaces
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - nonResourceURLs:
+      - '*'
+    verbs:
+      - '*'
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  annotations:
+    imaginekube.com/description: '{"zh": "被邀请加入企业空间之前无法访问任何资源。", "en": "Cannot access any resources before joining a workspace."}'
+    imaginekube.com/creator: admin
+  name: platform-regular
+rules: []
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  annotations:
+    imaginekube.com/creator: admin
+    imaginekube.com/description: '{"zh": "创建企业空间并成为所创建的企业空间的管理员。", "en": "Create workspaces and become an administrator of the created workspaces."}'
+  labels:
+    iam.imaginekube.com/auto-aggregate: "true"
+  name: platform-self-provisioner
+aggregationRoleTemplates:
+  templateNames:
+    - global-create-workspaces
+rules:
+  - apiGroups:
+      - tenant.imaginekube.com
+    resources:
+      - workspaces
+      - workspacetemplates
+    verbs:
+      - create
+      - watch
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRole
+metadata:
+  name: pre-registration
+rules:
+  - apiGroups:
+      - iam.imaginekube.com
+    resources:
+      - users
+    verbs:
+      - create
+      - list

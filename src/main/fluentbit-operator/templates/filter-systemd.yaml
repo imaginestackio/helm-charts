@@ -1,0 +1,18 @@
+{{- if .Values.Kubernetes -}}
+apiVersion: logging.imaginekube.com/v1alpha2
+kind: Filter
+metadata:
+  name: systemd
+  labels:
+    logging.imaginekube.com/enabled: "true"
+    logging.imaginekube.com/component: logging
+spec:
+  match: service.*
+  filters:
+  - lua:
+      script:
+        key: systemd.lua
+        name: fluent-bit-lua
+      call: add_time
+      timeAsTable: true
+  {{- end }}

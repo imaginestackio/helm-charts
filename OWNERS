@@ -1,0 +1,8 @@
+approvers:
+    - imaginestack #oncall
+    - techlead
+
+reviewers:
+    - cloudlogicai
+    - imaginestudioio
+    - litlogic

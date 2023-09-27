@@ -1,0 +1,16 @@
+{{- if .Values.Kubernetes -}}
+{{- if .Values.output.kafka.enable -}}
+apiVersion: logging.imaginekube.com/v1alpha2
+kind: Output
+metadata:
+  name: kafka
+  labels:
+    logging.imaginekube.com/enabled: "true"
+    logging.imaginekube.com/component: logging
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  kafka:
+    brokers: {{ .Values.output.kafka.brokers }}
+    topics: ik-log
+  {{- end }}
+  {{- end }}

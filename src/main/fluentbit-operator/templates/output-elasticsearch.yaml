@@ -1,0 +1,19 @@
+{{- if .Values.Kubernetes -}}
+{{- if .Values.output.es.enable -}}
+apiVersion: logging.imaginekube.com/v1alpha2
+kind: Output
+metadata:
+  name: es
+  labels:
+    logging.imaginekube.com/enabled: "true"
+    logging.imaginekube.com/component: logging
+spec:
+  matchRegex: (?:kube|service)\.(.*)
+  es:
+    host: {{ .Values.output.es.host }}
+    port: {{ .Values.output.es.port }}
+    logstashPrefix: ik-logstash-log
+    logstashFormat: true
+    timeKey: "@timestamp"
+  {{- end }}
+  {{- end }}

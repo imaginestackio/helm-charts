@@ -1,0 +1,197 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ik-installer
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - apps
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - extensions
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - batch
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - apiregistration.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - tenant.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - certificates.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - devops.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - logging.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - jaegertracing.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - policy
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - autoscaling
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - networking.istio.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - config.istio.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - iam.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - notification.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - auditing.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - events.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - core.kubefed.io
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - installer.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - storage.imaginekube.com
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+    - security.istio.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - monitoring.kiali.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - kiali.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - kubeedge.imaginekube.com
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - types.kubefed.io
+    resources:
+    - '*'
+    verbs:
+    - '*'

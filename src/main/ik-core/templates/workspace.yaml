@@ -1,0 +1,15 @@
+{{ if eq .Values.role "host" }}
+apiVersion: tenant.imaginekube.com/v1alpha2
+kind: WorkspaceTemplate
+metadata:
+  annotations:
+    imaginekube.com/creator: admin
+    imaginekube.com/description: "system-workspace is a built-in workspace automatically created by ImagineKube. It contains all system components to run ImagineKube."
+  name: system-workspace
+spec:
+  placement:
+    clusterSelector: {}
+  template:
+    spec:
+      manager: admin
+{{ end }}

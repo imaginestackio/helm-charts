@@ -1,0 +1,83 @@
+ad:
+  name: adservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/adservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/adservice:v0.2.3
+    pullPolicy: IfNotPresent
+cart:
+  name: cartservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/cartservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/cartservice:v0.2.3
+    pullPolicy: IfNotPresent
+checkout:
+  name: checkoutservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/checkoutservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/checkoutservice:v0.2.3
+    pullPolicy: IfNotPresent
+currency:
+  name: currencyservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/currencyservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/currencyservice:v0.2.3
+    pullPolicy: IfNotPresent
+email:
+  name: emailservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/emailservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/emailservice:v0.2.3
+    pullPolicy: IfNotPresent
+frontend:
+  name: frontend
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/frontend:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/frontend:v0.2.3
+    pullPolicy: IfNotPresent
+payment:
+  name: paymentservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/paymentservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/paymentservice:v0.2.3
+    pullPolicy: IfNotPresent
+productcatalog:
+  name: productcatalogservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/productcatalogservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/productcatalogservice:v0.2.3
+    pullPolicy: IfNotPresent
+recommendation:
+  name: recommendationservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/recommendationservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/recommendationservice:v0.2.3
+    pullPolicy: IfNotPresent
+redis:
+  name: redis-cart
+  version: v1
+  image:
+    repository: redis:alpine
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/redis:alpine
+    pullPolicy: IfNotPresent
+shipping:
+  name: shippingservice
+  version: v1
+  image:
+    repository: gcr.io/google-samples/microservices-demo/shippingservice:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/shippingservice:v0.2.3
+    pullPolicy: IfNotPresent
+loadgenerator:
+  name: loadgenerator
+  image:
+    repository: gcr.io/google-samples/microservices-demo/loadgenerator:v0.2.3
+    # repository: registry.cn-beijing.aliyuncs.com/imaginekubeio/loadgenerator:v0.2.3
+    pullPolicy: IfNotPresent

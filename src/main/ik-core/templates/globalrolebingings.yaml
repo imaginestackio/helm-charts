@@ -1,0 +1,60 @@
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRoleBinding
+metadata:
+  labels:
+    iam.imaginekube.com/role-ref: platform-admin
+    iam.imaginekube.com/user-ref: admin
+  name: admin-platform-admin
+roleRef:
+  apiGroup: iam.imaginekube.com
+  kind: GlobalRole
+  name: platform-admin
+subjects:
+  - apiGroup: iam.imaginekube.com
+    kind: User
+    name: admin
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRoleBinding
+metadata:
+  name: anonymous
+roleRef:
+  apiGroup: iam.imaginekube.com
+  kind: GlobalRole
+  name: anonymous
+subjects:
+  - apiGroup: iam.imaginekube.com
+    kind: Group
+    name: system:unauthenticated
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRoleBinding
+metadata:
+  name: authenticated
+roleRef:
+  apiGroup: iam.imaginekube.com
+  kind: GlobalRole
+  name: authenticated
+subjects:
+  - apiGroup: iam.imaginekube.com
+    kind: Group
+    name: system:authenticated
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: GlobalRoleBinding
+metadata:
+  name: pre-registration
+roleRef:
+  apiGroup: iam.imaginekube.com
+  kind: GlobalRole
+  name: pre-registration
+subjects:
+  - apiGroup: iam.imaginekube.com
+    kind: Group
+    name: pre-registration
+  - apiGroup: iam.imaginekube.com
+    kind: User
+    name: system:pre-registration

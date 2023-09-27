@@ -1,0 +1,13 @@
+{{ if (lookup "installer.imaginekube.com/v1alpha1" "ClusterConfiguration" "imaginekube-system" "ik-installer") -}}
+{{ lookup "installer.imaginekube.com/v1alpha1" "ClusterConfiguration" "imaginekube-system" "ik-installer" | toYaml }}
+{{ else -}}
+apiVersion: installer.imaginekube.com/v1alpha1
+kind: ClusterConfiguration
+metadata:
+  name: ik-installer
+  namespace: imaginekube-system
+  labels:
+    version: {{ .Chart.AppVersion }}
+spec:
+{{ toYaml .Values.cc | indent 2 }}
+{{ end -}}

@@ -1,0 +1,54 @@
+apiVersion: iam.imaginekube.com/v1beta1
+kind: ClusterRole
+metadata:
+  annotations:
+    imaginekube.com/creator: system
+    imaginekube.com/description: '{"zh": "管理集群中的所有资源。", "en": "Manage all resources in the cluster."}'
+  name: cluster-admin
+aggregationRoleTemplates:
+  roleSelector:
+    matchLabels:
+      iam.imaginekube.com/scope: "cluster"
+  templateNames: []
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - nonResourceURLs:
+      - '*'
+    verbs:
+      - '*'
+
+---
+apiVersion: iam.imaginekube.com/v1beta1
+kind: ClusterRole
+metadata:
+  annotations:
+    imaginekube.com/creator: system
+    imaginekube.com/description: '{"zh": "查看集群中的所有资源。", "en": "View all resources in the cluster."}'
+  name: cluster-viewer
+aggregationRoleTemplates:
+  roleSelector:
+    matchLabels:
+      iam.imaginekube.com/aggregate-to-cluster-viewer: ""
+  templateNames:
+    - cluster-view-components
+    - cluster-view-volume-snapshot-classes
+    - cluster-view-volumes
+    - cluster-view-roles
+rules:
+  - apiGroups:
+      - '*'
+    resources:
+      - '*'
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - '*'
+    verbs:
+      - GET

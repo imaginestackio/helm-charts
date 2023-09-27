@@ -1,0 +1,18 @@
+{{- if .Values.Kubernetes -}}
+apiVersion: logging.imaginekube.com/v1alpha2
+kind: Filter
+metadata:
+  name: containerd
+  labels:
+    logging.imaginekube.com/enabled: "true"
+    logging.imaginekube.com/component: logging
+spec:
+  match: kube.*
+  filters:
+  - lua:
+      script:
+        key: containerd.lua
+        name: fluent-bit-containerd-config
+      call: containerd
+      timeAsTable: true
+  {{- end }}
